@@ -1,0 +1,69 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="quarkus-liquibase-mongodb">
+        <ext:createCollection collectionName="movies"/>
+        <ext:insertMany collectionName="movies">
+            <ext:documents>
+            [
+               {
+    "title": "Grown Ups",
+    "genre": [
+      "Comedies"
+    ],
+    "duration": 103,
+    "released": true,
+    "year": 2010
+  },
+  {
+    "title": "Dark Skies",
+    "genre": [
+      "Horror Movies",
+      "Sci-Fi &amp; Fantasy"
+    ],
+    "duration": 97,
+    "released": true,
+    "year": 2013
+  },
+  {
+    "title": "Paranoia",
+    "genre": [
+      "Thrillers"
+    ],
+    "duration": 106,
+    "released": true,
+    "year": 2013
+  },
+  {
+    "title": "Ankahi Kahaniya",
+    "genre": [
+      "Dramas",
+      "Independent Movies",
+      "International Movies"
+    ],
+    "duration": 111,
+    "released": true,
+    "year": 2021
+  },
+  {
+    "title": "The Father Who Moves Mountains",
+    "genre": [
+      "Dramas",
+      "International Movies",
+      "Thrillers"
+    ],
+    "duration": 110,
+    "released": true,
+    "year": 2021
+  }
+            ]
+            </ext:documents>
+        </ext:insertMany>
+    </changeSet>
+
+</databaseChangeLog>
