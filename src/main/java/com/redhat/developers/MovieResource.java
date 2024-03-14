@@ -19,24 +19,33 @@ import jakarta.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class MovieResource {
 
+    MovieService movieService;
+
+    public MovieResource(MovieService movieService) {
+        this.movieService = movieService;
+    }
+
     @GET
-    public List<Movie> allMovies() {
-        return Movie.listAll();
+    public List<MovieDTO> allMovies() {
+        return movieService.getAllMovies();
     }
 
     @GET
     @Path("{id}")
     public Response getMovie(@PathParam("id") String id) {
-        var movie = Movie.findById(new ObjectId(id));
+        var movie = movieService.getMovieById(id);
         return movie != null  
             ? Response.ok(movie).build() 
             : Response.status(Response.Status.NOT_FOUND).build();
     }
 
     @POST
-    public Response addMovie(Movie movie) {
-        movie.persist();
-        return Response.created(URI.create("/api/movies"+movie.id)).entity(movie).build();
+    public Response addMovie(MovieDTO dto) {
+        var movie = movieService.addMovie(dto);
+        return Response
+                .created(URI.create("/api/movies"+movie.id()))
+                .entity(movie)
+                .build();    
     }
     
 }
