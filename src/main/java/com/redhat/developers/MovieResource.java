@@ -3,8 +3,6 @@ package com.redhat.developers;
 import java.net.URI;
 import java.util.List;
 
-import org.bson.types.ObjectId;
-
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -46,6 +44,12 @@ public class MovieResource {
                 .created(URI.create("/api/movies"+movie.id()))
                 .entity(movie)
                 .build();    
+    }
+
+    @GET
+    @Path("/random/{count}")
+    public List<MovieDTO> getRandomMovies(Integer count) {
+        return movieService.getRandomMovies(count);
     }
     
 }

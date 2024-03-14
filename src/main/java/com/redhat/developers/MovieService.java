@@ -1,34 +1,42 @@
 package com.redhat.developers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class MovieService {
 
-    @Inject
-    MovieMapper movieMapper;
+    private final MovieMapper movieMapper;
+    private final MovieRepository movieRepository;
+
+    public MovieService(MovieMapper movieMapper, MovieRepository movieRepository) {
+        this.movieMapper = movieMapper;
+        this.movieRepository = movieRepository;
+    }
     
     public List<MovieDTO> getAllMovies() {
-        return Movie.<Movie>listAll().stream()
+        return movieRepository.listAll().stream()
                 .map(movieMapper::toDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public MovieDTO getMovieById(String id) {
-        return movieMapper.toDTO(Movie.findById(new ObjectId(id)));
+        return movieMapper.toDTO(movieRepository.findById(new ObjectId(id)));
     }
 
     public MovieDTO addMovie(MovieDTO dto) {
         var movie = movieMapper.toEntity(dto);
         movie.id = null;
-        Movie.persist(movie);
+        movieRepository.persist(movie);
         return movieMapper.toDTO(movie);
+    }
+
+    public List<MovieDTO> getRandomMovies(Integer count) {
+        return movieRepository.getRandomMovies(count).stream()
+            .map(movieMapper::toDTO).toList();
     }
 
 }
