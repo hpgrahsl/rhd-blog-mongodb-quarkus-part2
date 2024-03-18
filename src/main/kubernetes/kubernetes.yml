@@ -46,3 +46,12 @@ spec:
           emptyDir: {}
         - name: mongo-data-dir
           emptyDir: {}
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: mongodb-connection
+type: Opaque
+stringData:
+  managed: <YOUR_MONGODB_ATLAS_CONNECTION_STRING_INCLUDING_CREDENTIALS_HERE>
+  selfhosted: mongodb://mongodb:27017
